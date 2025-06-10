@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable
 
 @Service
 class CustomerService(
-    val repo: CustomerRepository
+    val repo: CustomerRepository,
+    val bookService: BookService
 ) {
 
 
@@ -18,7 +19,7 @@ class CustomerService(
         return repo.findAll().toList()
     }
 
-    fun getCustomer(id: Int): Customer {
+    fun getById(id: Int): Customer {
         return repo.findById(id).orElseThrow()
     }
 
@@ -36,9 +37,10 @@ class CustomerService(
     }
 
     fun delete(id: Int) {
-        if (!repo.existsById(id)){
-            throw Exception("Customer Não Encontrado.");
-        }
+
+        val customer = getById(id)
+
+        bookService.deleteByCustomer(customer)
 
         repo.deleteById(id)
     }
