@@ -1,13 +1,10 @@
 package com.mercadolivro.model
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import com.mercadolivro.enums.CustomerStatus
+import jakarta.persistence.*
 
 @Entity
-data class Customer (
+data class Customer(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int? = null,
@@ -16,5 +13,9 @@ data class Customer (
     var name: String,
 
     @Column
-    var email: String
+    var email: String,
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    var status: CustomerStatus
 )

@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-data class Book (
+data class Book(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,11 +18,34 @@ data class Book (
     @Column
     var price: BigDecimal,
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    var status: BookStatus? = null,
-
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    var customer: Customer?  = null
-)
+    var customer: Customer? = null
+) {
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    var status: BookStatus? = null
+        set(value) {
+
+            if (field == BookStatus.CANCELADO || field == BookStatus.DELETADO) {
+                throw RuntimeException(
+                    "Alteração do Status Não Permitida para" +
+                            " Book com Status $field"
+                )
+            }
+
+            field = value
+        }
+
+    constructor(
+        id: Int? = null,
+        name: String,
+        price: BigDecimal,
+        customer: Customer? = null,
+        status: BookStatus?
+    ) : this(id, name, price, customer) {
+        this.status = status
+    }
+
+}

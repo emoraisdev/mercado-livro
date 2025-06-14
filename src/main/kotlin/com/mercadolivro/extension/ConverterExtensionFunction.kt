@@ -4,16 +4,24 @@ import com.mercadolivro.controller.request.PostBookRequest
 import com.mercadolivro.controller.request.PostCustomerRequest
 import com.mercadolivro.controller.request.PutBookRequest
 import com.mercadolivro.controller.request.PutCustomerRequest
+import com.mercadolivro.controller.response.BookResponse
+import com.mercadolivro.controller.response.CustomerResponse
 import com.mercadolivro.enums.BookStatus
+import com.mercadolivro.enums.CustomerStatus
 import com.mercadolivro.model.Book
 import com.mercadolivro.model.Customer
 
 fun PostCustomerRequest.toCustomerModel(): Customer {
-    return Customer(name = this.name, email = this.email)
+    return Customer(name = this.name, email = this.email, status = CustomerStatus.ATIVO)
 }
 
-fun PutCustomerRequest.toCustomerModel(id: Int): Customer {
-    return Customer(id = id, name = this.name, email = this.email)
+fun PutCustomerRequest.toCustomerModel(previousValue: Customer): Customer {
+    return Customer(
+        id = previousValue.id,
+        name = previousValue.name,
+        email = previousValue.email,
+        status = previousValue.status
+    )
 }
 
 fun PostBookRequest.toBookModel(customer: Customer): Book {
@@ -32,5 +40,25 @@ fun PutBookRequest.toBookModel(previousValue: Book): Book {
         price = this.price ?: previousValue.price,
         status = previousValue.status,
         customer = previousValue.customer
+    )
+}
+
+fun Customer.toReponse(): CustomerResponse {
+
+    return CustomerResponse(
+        id = this.id,
+        name = this.name,
+        email = this.email,
+        status = this.status
+    )
+}
+
+fun Book.toResponse(): BookResponse {
+    return BookResponse(
+        id = this.id,
+        name = this.name,
+        price = this.price,
+        customer = this.customer,
+        status = this.status
     )
 }
