@@ -1,6 +1,6 @@
 package com.mercadolivro.controller.response
 
-data class FiledErrorResponse(
+data class FieldErrorResponse(
     var message: String,
-    var filed: String
+    var field: String
 )

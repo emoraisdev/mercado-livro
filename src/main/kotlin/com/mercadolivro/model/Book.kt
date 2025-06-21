@@ -1,6 +1,8 @@
 package com.mercadolivro.model;
 
 import com.mercadolivro.enums.BookStatus
+import com.mercadolivro.enums.Errors
+import com.mercadolivro.exception.BadRequestException
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -29,9 +31,9 @@ data class Book(
         set(value) {
 
             if (field == BookStatus.CANCELADO || field == BookStatus.DELETADO) {
-                throw RuntimeException(
-                    "Alteração do Status Não Permitida para" +
-                            " Book com Status $field"
+                throw BadRequestException(
+                    Errors.ML1002.message.format(field),
+                    Errors.ML1002.code,
                 )
             }
 
