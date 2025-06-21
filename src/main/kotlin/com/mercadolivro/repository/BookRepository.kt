@@ -3,11 +3,14 @@ package com.mercadolivro.repository
 import com.mercadolivro.enums.BookStatus
 import com.mercadolivro.model.Book
 import com.mercadolivro.model.Customer
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.repository.CrudRepository
 
-interface BookRepository : CrudRepository<Book, Int> {
+interface BookRepository : JpaRepository<Book, Int> {
 
-    fun findByStatus(ativo: BookStatus): List<Book>
+    fun findByStatus(ativo: BookStatus, pageable: Pageable): Page<Book>
 
     fun findByCustomer(customer: Customer): List<Book>
 
