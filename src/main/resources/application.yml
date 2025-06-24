@@ -4,6 +4,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    open-in-view: false
   datasource:
     url: jdbc:mysql://localhost:3306/mercadolivro?createDatabaseIfNotExist=true
     username: root

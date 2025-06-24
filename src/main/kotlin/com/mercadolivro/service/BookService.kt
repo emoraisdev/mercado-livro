@@ -55,4 +55,8 @@ class BookService(
 
         repo.saveAll(books)
     }
+
+    fun findAllByIds(bookIds: Set<Int>): List<Book> {
+        return repo.findAllById(bookIds).toList()
+    }
 }
