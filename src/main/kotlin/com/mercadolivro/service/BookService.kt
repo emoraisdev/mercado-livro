@@ -27,10 +27,12 @@ class BookService(
         repo.findByStatus(BookStatus.ATIVO, pageable)
 
     fun findById(id: Int): Book {
-        return repo.findById(id).orElseThrow { NotFoundException(
-            Errors.ML1001.message.format(id),
-            Errors.ML1001.code
-        ) }
+        return repo.findById(id).orElseThrow {
+            NotFoundException(
+                Errors.ML1001.message.format(id),
+                Errors.ML1001.code
+            )
+        }
     }
 
     fun delete(id: Int) {
@@ -58,5 +60,11 @@ class BookService(
 
     fun findAllByIds(bookIds: Set<Int>): List<Book> {
         return repo.findAllById(bookIds).toList()
+    }
+
+    fun purchase(books: MutableList<Book>) {
+        books.map { it.status = BookStatus.VENDIDO }
+
+        repo.saveAll(books)
     }
 }
