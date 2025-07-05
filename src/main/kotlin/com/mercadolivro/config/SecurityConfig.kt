@@ -2,6 +2,7 @@ package com.mercadolivro.config
 
 import com.mercadolivro.repository.CustomerRepository
 import com.mercadolivro.security.AuthenticationFilter
+import com.mercadolivro.security.JwtUtil
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -17,7 +18,8 @@ import org.springframework.security.web.SecurityFilterChain
 @EnableWebSecurity
 class SecurityConfig(
     private val customerRepository: CustomerRepository,
-    private val authenticationConfiguration: AuthenticationConfiguration
+    private val authenticationConfiguration: AuthenticationConfiguration,
+    private val jwtUtil: JwtUtil
 ) {
 
     private val publicMatchers = arrayOf<String>()
@@ -42,7 +44,9 @@ class SecurityConfig(
             }
             .formLogin { it.disable() }
             .httpBasic { it.disable() }
-            .addFilter(AuthenticationFilter(authenticationManager(), customerRepository))
+            .addFilter(AuthenticationFilter(authenticationManager(),
+                customerRepository,
+                jwtUtil))
 
         return http.build()
     }

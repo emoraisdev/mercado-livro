@@ -10,7 +10,7 @@ class UserCustomDetails(
     val customer: Customer
 ) : UserDetails {
 
-    val id = customer.id
+    val id = customer.id!!
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> =
         customer.roles.map { SimpleGrantedAuthority(it.description) }.toMutableSet()
