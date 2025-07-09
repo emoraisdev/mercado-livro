@@ -4,6 +4,7 @@ enum class Errors(
     val code: String,
     val message: String
 ) {
+    ML1000("ML-1000", "Unauthorized"),
     ML1001("ML-1001", "Book %s not exists"),
     ML1002("ML-1002", "Cannot upadte Book with status [%s]"),
 

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class BookService(
-    val repo: BookRepository
+    private val repo: BookRepository
 ) {
 
     fun create(book: Book) {
