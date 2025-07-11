@@ -4,6 +4,7 @@ plugins {
 	id("org.springframework.boot") version "3.5.0"
 	id("io.spring.dependency-management") version "1.1.7"
 	kotlin("plugin.jpa") version "1.9.25"
+	jacoco
 }
 
 group = "com.mercadolivro"
@@ -32,6 +33,8 @@ dependencies {
 	runtimeOnly("com.mysql:mysql-connector-j")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+	// https://mvnrepository.com/artifact/io.mockk/mockk
+	testImplementation("io.mockk:mockk:1.14.4")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
